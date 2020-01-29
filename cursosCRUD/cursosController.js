@@ -23,29 +23,10 @@ const getCursos = (req, res) => {
 };
 
 const getCurso = (req, res) => {
-    const { id } = req.params;
-
-    Curso.findById(id)
-        .then(curso => {
-            if (!curso) {
-                res.status(404).json({
-                    code: 12,
-                    message: "El curso no fue encontrado"
-                })
-            } else {
-                res.status(200).json({
-                    code: 0,
-                    message: curso
-                });
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                code: 20,
-                message: "Ocurrió un error con un módulo interno"
-            });
-        })
+    res.status(200).json({
+        code: 0,
+        message: req.curso
+    });
 };
 
 const postCurso = (req, res) => {
