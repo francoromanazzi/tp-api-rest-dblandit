@@ -11,15 +11,29 @@ const postLoginValidators = [
 ]
 
 const adminRoute = (req, res, next) => {
-    const token = req.headers['x-access-token'];
-
-    if (!token)
+    if(!req.headers['authorization']) 
         return res.status(401).json({
             code: 2,
-            message: 'No autorizado. Se debe suministrar un token'
+            message: 'No autorizado. Se debe suministrar un token en el header \'Authorization\''
+        }); 
+
+    const [bearer, token] = req.headers['authorization'].split(' ');
+
+    if (bearer != 'Bearer' || !token)
+        return res.status(401).json({
+            code: 2,
+            message: 'El token debe tener formato `Bearer ${JWT}`'
         });
     
-    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    let decoded;
+    try {
+        decoded = jwt.verify(token, process.env.JWT_SECRET)
+    } catch(err) {
+        return res.status(401).json({
+            code: 2,
+            message: 'JWT invalido'
+        })
+    }
 
     Auth.findById(decoded.id, { password: 0 })
         .then(user => {
