@@ -9,7 +9,10 @@ const Curso = new mongoose.Schema({
     alumnos: [Alumno]
 }, { collection: 'cursos' });
 
-Curso.methods.getAlumnoDestacado = () => this.alumnos
-    .reduce((mejorAlumno, alumno) => alumno.nota > mejorAlumno.nota ? alumno : mejorAlumno )
 
+Curso.methods.getAlumnoDestacado = function() {
+    return this.alumnos
+        .reduce((mejorAlumno, alumno) => alumno.nota > mejorAlumno.nota ? alumno : mejorAlumno )
+}
+    
 module.exports = mongoose.model('Curso', Curso);
