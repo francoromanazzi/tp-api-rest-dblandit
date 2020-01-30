@@ -62,7 +62,7 @@ const postCurso = (req, res) => {
 const deleteCurso = (req, res) => {
     const { id } = req.params;
 
-    Factura.findByIdAndDelete(id)
+    Curso.findByIdAndDelete(id)
         .then(() => {
             res.status(200).json({
                 code: 0,
