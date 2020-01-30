@@ -1,5 +1,3 @@
-const Curso = require('../models/Curso')
-
 const getAlumnos = (req, res) => {
     res.status(200).json({
         code: 0,
