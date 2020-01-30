@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const cursosRouter = require('./cursosCRUD/cursosRouter');
+const authRouter = require('./authCRUD/authRouter');
+const { adminRoute } = require('./authCRUD/authValidators');
 
 const app = express();
 
@@ -16,7 +18,8 @@ const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/cursos";
 app.use(bodyParser.json());
 
 // Routes
-app.use('/cursos', cursosRouter);
+app.use('/cursos', adminRoute, cursosRouter);
+app.use('/auth', authRouter);
 
 // Start server
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })

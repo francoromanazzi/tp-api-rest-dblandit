@@ -1,4 +1,4 @@
-const { check, query, validationResult } = require('express-validator');
+const { check, query } = require('express-validator');
 
 const Curso = require('../models/Curso');
 
@@ -18,19 +18,6 @@ const postCursoValidators = [
     check('alumnos.*.nota').isNumeric().withMessage("alumnos.nota debe ser numerico")
         .custom(nota => nota >= 0 && nota <= 10 ? Promise.resolve() : Promise.reject("alumnos.nota debe ser entre 0 y 10") ),
 ];
-
-const checkValidationResult = (req, res, next) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            code: 10,
-            message: errors.array()
-        })
-    } else {
-        next()
-    }
-}
 
 const cursoExiste = (req, res, next) => {
     const { id } = req.params;
@@ -56,4 +43,4 @@ const cursoExiste = (req, res, next) => {
         })
 }
 
-module.exports = { getCursosQueryValidators, postCursoValidators, cursoExiste, checkValidationResult };
+module.exports = { getCursosQueryValidators, postCursoValidators, cursoExiste };
