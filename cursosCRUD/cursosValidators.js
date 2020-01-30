@@ -1,16 +1,36 @@
-const { check } = require('express-validator');
+const { check, query, validationResult } = require('express-validator');
+
 const Curso = require('../models/Curso');
 
-const postValidators = [
+const getCursosQueryValidators = [
+    query('anioDictado').optional().isInt().withMessage("anioDictado debe ser entero"),
+    query('duracion').optional().isNumeric().withMessage("duracion debe ser numerico")
+]
+
+const postCursoValidators = [
     check('anioDictado').isInt().withMessage("anioDictado debe ser entero"),
     check('tema').isString().withMessage("tema debe ser string"),
     check('duracion').isNumeric().withMessage("duracion debe ser numerico"),
     check('alumnos.*.nombre').isString().withMessage("alumnos.nombre debe ser string"),
     check('alumnos.*.apellido').isString().withMessage("alumnos.apellido debe ser string"),
-    check('alumnos.*.dni').isString().withMessage("alumnos.dni debe ser string"),
+    check('alumnos.*.dni').isInt().withMessage("alumnos.dni debe ser entero"),
     check('alumnos.*.direccion').isString().withMessage("alumnos.direccion debe ser string"),
-    check('alumnos.*.nota').isNumeric().withMessage("alumnos.nota debe ser numerico"),
+    check('alumnos.*.nota').isNumeric().withMessage("alumnos.nota debe ser numerico")
+        .custom(nota => nota >= 0 && nota <= 10 ? Promise.resolve() : Promise.reject("alumnos.nota debe ser entre 0 y 10") ),
 ];
+
+const checkValidationResult = (req, res, next) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({
+            code: 10,
+            message: errors.array()
+        })
+    } else {
+        next()
+    }
+}
 
 const cursoExiste = (req, res, next) => {
     const { id } = req.params;
@@ -36,4 +56,4 @@ const cursoExiste = (req, res, next) => {
         })
 }
 
-module.exports = { postValidators, cursoExiste };
+module.exports = { getCursosQueryValidators, postCursoValidators, cursoExiste, checkValidationResult };

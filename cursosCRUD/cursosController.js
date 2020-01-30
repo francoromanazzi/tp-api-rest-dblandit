@@ -1,12 +1,7 @@
 const Curso = require('../models/Curso');
 
-const { validationResult } = require('express-validator');
-
 const getCursos = (req, res) => {
-    // TODO: validar query
-    const { query = {} } = req;
-
-    Curso.find(query)
+    Curso.find(req.query)
         .then(cursos => {
             res.status(200).json({
                 code: 0,
@@ -30,15 +25,6 @@ const getCurso = (req, res) => {
 };
 
 const postCurso = (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({
-            code: 10,
-            message: errors.array()
-        })
-    }
-
     const { anioDictado, duracion, tema, alumnos } = req.body;
 
     const newCurso = new Curso({ anioDictado, duracion, tema, alumnos });
