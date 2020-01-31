@@ -21,9 +21,10 @@ const postCursoBodyValidators = [
 
 const cursoExiste = (req, res, next) => {
     const { id } = req.params;
-
+    console.log('req.params ', req.params)
     Curso.findById(id)
         .then(curso => {
+            console.log('curso ', curso)
             if (!curso) {
                 res.status(404).json({
                     code: 12,
