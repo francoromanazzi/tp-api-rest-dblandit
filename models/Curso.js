@@ -9,6 +9,8 @@ const Curso = new mongoose.Schema({
     alumnos: [Alumno]
 }, { collection: 'cursos' });
 
+Curso.index({ anioDictado: 1, duracion: 1 });
+Curso.index({ duracion: 1 });
 
 Curso.methods.getAlumnoDestacado = function() {
     return this.alumnos

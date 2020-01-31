@@ -1,0 +1,459 @@
+openapi: 3.0.0
+info:
+  title: TP api rest DBlandIT
+  description: IMPORTANTE! Se puede utilizar tanto mi server en heroku como un mock
+  version: 1.0.0
+servers:
+- url: https://tp-api-rest-dblandit.herokuapp.com/
+  description: heroku
+- url: https://virtserver.swaggerhub.com/francoromanazzi/tp-api-rest-dblandit/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: cursos
+  description: Operaciones sobre cursos
+- name: alumnos
+  description: Operaciones sobre alumnos
+- name: auth
+  description: Operaciones sobre autenticación
+paths:
+  /api/v1/cursos/:
+    get:
+      tags:
+      - cursos
+      summary: trae todos los cursos
+      description: |
+        Se puede filtrar por duracion y año de dictado
+      operationId: getCursos
+      parameters:
+      - name: duracion
+        in: query
+        description: filtro opcional sobre la duracion del curso
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      - name: anioDictado
+        in: query
+        description: filtro opcional sobre el año de dictado del curso
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: resultados que matchean con filtro
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: parámetros erroneos
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el usuario del token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - cursos
+      summary: crea un curso nuevo
+      operationId: postCursos
+      requestBody:
+        description: curso a crear
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CursoSinId'
+      responses:
+        "201":
+          description: curso creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: curso inválido
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el usuario del token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+  /api/v1/cursos/{id}/:
+    get:
+      tags:
+      - cursos
+      summary: trae un curso por _id
+      operationId: getCursoPorId
+      parameters:
+      - name: id
+        in: path
+        description: _id del curso
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: se pudo encontrar el curso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: id del path param invalido
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el curso, o bien no se encontro el usuario del
+            token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - cursos
+      summary: borra un curso por _id
+      operationId: deleteCursoPorId
+      parameters:
+      - name: id
+        in: path
+        description: _id del curso
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: no hubo errores
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+        "400":
+          description: id del path param invalido
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el curso, o bien no se encontro el usuario del
+            token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+  /api/v1/cursos/{id}/alumnos/:
+    get:
+      tags:
+      - alumnos
+      summary: trae los alumnos un curso
+      operationId: getAlumnosDeCurso
+      parameters:
+      - name: id
+        in: path
+        description: _id del curso
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: se pudo encontrar el curso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: id del path param invalido
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el curso, o bien no se encontro el usuario del
+            token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+  /api/v1/cursos/{id}/alumnos/destacado/:
+    get:
+      tags:
+      - alumnos
+      summary: trae el alumno con mejor nota de un curso
+      operationId: getAlumnoDestacadoDeCurso
+      parameters:
+      - name: id
+        in: path
+        description: _id del curso
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: se pudo encontrar el curso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "400":
+          description: id del path param invalido
+        "401":
+          description: no autorizado, se requiere token
+        "404":
+          description: no se encontro el curso, o bien no se encontro el usuario del
+            token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+  /api/v1/auth/login/:
+    post:
+      tags:
+      - auth
+      summary: obtener el JWT a partir de credenciales
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSinId'
+      responses:
+        "200":
+          description: usuario logueado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "400":
+          description: body params invalidos
+        "401":
+          description: password invalido
+        "404":
+          description: username no encontrado
+        "500":
+          description: error interno
+  /api/v1/auth/register/:
+    post:
+      tags:
+      - auth
+      summary: registrar un nuevo usuario
+      operationId: register
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserSinId'
+      responses:
+        "200":
+          description: usuario registrado y logueado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "400":
+          description: body params invalidos
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+  /api/v1/auth/{id}/:
+    delete:
+      tags:
+      - auth
+      summary: borra un usuario por _id
+      description: no se puede borrar al usuario admin
+      operationId: deleteUser
+      parameters:
+      - name: id
+        in: path
+        description: _id del usuario
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: usuario logueado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_4'
+        "400":
+          description: id del path param invalido
+        "401":
+          description: no autorizado, se requiere token, o bien se intento borrar
+            el usuario admin
+        "404":
+          description: no se encontro el usuario, o bien no se encontro el usuario
+            del token
+        "500":
+          description: error interno
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    CursoSinId:
+      required:
+      - alumnos
+      - anioDictado
+      - duracion
+      - tema
+      type: object
+      properties:
+        anioDictado:
+          type: integer
+          example: 2020
+        tema:
+          type: string
+          example: MongoDB
+        duracion:
+          type: integer
+          example: 50
+        alumnos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alumno'
+    Curso:
+      allOf:
+      - $ref: '#/components/schemas/CursoSinId'
+      - required:
+        - _id
+        type: object
+        properties:
+          _id:
+            type: string
+            example: 5e32232df183b7d50d4cb8f1
+    Alumno:
+      required:
+      - apellido
+      - direccion
+      - dni
+      - nombre
+      - nota
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: Juan
+        apellido:
+          type: string
+          example: Perez
+        dni:
+          type: integer
+          example: 40520596
+        direccion:
+          type: string
+          example: Av. Medrano 951
+        nota:
+          type: number
+          example: 9.5
+    UserSinId:
+      required:
+      - password
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: juan123
+        password:
+          type: string
+          example: unapasswordsegura
+    User:
+      allOf:
+      - $ref: '#/components/schemas/UserSinId'
+      - required:
+        - _id
+        type: object
+        properties:
+          _id:
+            type: string
+            example: 5e32232df183b7d50d4cb8f1
+    inline_response_200:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          type: array
+          items:
+            $ref: '#/components/schemas/Curso'
+    inline_response_201:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          $ref: '#/components/schemas/Curso'
+    inline_response_200_1:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          type: array
+          items:
+            $ref: '#/components/schemas/Alumno'
+    inline_response_200_2:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          $ref: '#/components/schemas/Alumno'
+    inline_response_200_3:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          $ref: '#/components/schemas/inline_response_200_3_message'
+    inline_response_200_4:
+      type: object
+      properties:
+        code:
+          type: integer
+          example: 0
+        message:
+          $ref: '#/components/schemas/inline_response_200_4_message'
+    inline_response_200_3_message:
+      type: object
+      properties:
+        auth:
+          type: boolean
+          example: true
+        token:
+          type: string
+          example: |
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlMzMzNzAwZjI3OTA3MjJjMDBmODEwMyIsImlhdCI6MTU4MDQ0NTcwNSwiZXhwIjoxNTgwNTMyMTA1fQ.ftu1AaQUb1voopltlJV8li7NB0N9-3KJkod49udWxR4
+    inline_response_200_4_message:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 5e32232df183b7d50d4cb8f1
+        username:
+          type: string
+          example: juan123
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
