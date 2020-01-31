@@ -36,4 +36,27 @@ npm run nodemon
 # Producción
 npm start
 ```
+## Requerimientos
+La empresa DBlandIT nos pide que desarrollemos una API REST que permita administrar sus clientes y los cursos que dicta. Lo que nos dijeron fue lo siguiente: 
+Los clientes tienen los siguientes datos:
+* nombre
+* apellido
+* DNI
+* dirección
 
+Los cursos tienen los siguientes datos:
+* Año de dictado
+* Duración
+* Tema
+* Alumnos (colección de clientes)
+
+Nos dijeron además que para almacenar los datos quieren que usemos MongoDB y NodeJS como backend, y que van a acceder más que nada a los cursos que dictan por lo que es importante recuperarlos rápidamente (esto incluye los alumnos de cada curso). Ah, también nos dijeron que de los alumnos quieren guardar la nota que tuvieron en el curso (es numérica y es una sola). 
+El modelado de datos queda a nuestra disposición.
+
+Puntualmente nos pidieron que la API permita:
+Crear y eliminar cursos.
+Listar los cursos (permitiendo filtrar por su duración y año de dictado) en formato JSON
+Obtener los alumnos de un curso en formato JSON.
+Saber cuál fue el alumno que se destacó en un curso (el que tenga mayor nota).
+
+Nota: no se requiere implementar un mecanismo de autenticación, pero en caso que deseen hacerlo suma.
