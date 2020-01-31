@@ -40,7 +40,7 @@ const adminRoute = (req, res, next) => {
             if (!user) {
                 res.status(404).json({
                     code: 12,
-                    message: 'No se encontro el usuario'
+                    message: 'No se encontro el usuario propietario del token'
                 });
             } else {
                 next();
