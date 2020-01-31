@@ -21,7 +21,7 @@ const adminRoute = (req, res, next) => {
 
     if (bearer != 'Bearer' || !token)
         return res.status(401).json({
-            code: 2,
+            code: 3,
             message: 'El token debe tener formato `Bearer ${JWT}`'
         });
     
@@ -30,7 +30,7 @@ const adminRoute = (req, res, next) => {
         decoded = jwt.verify(token, process.env.JWT_SECRET)
     } catch(err) {
         return res.status(401).json({
-            code: 2,
+            code: 4,
             message: 'JWT invalido'
         })
     }

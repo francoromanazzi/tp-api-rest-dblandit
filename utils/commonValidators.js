@@ -1,4 +1,8 @@
-const { validationResult } = require('express-validator');
+const { param, validationResult } = require('express-validator');
+
+const idEsMongoId = [
+    param('id').isMongoId().withMessage('id debe ser un mongoId')
+]
 
 const checkValidationResult = (req, res, next) => {
     const errors = validationResult(req);
@@ -13,4 +17,4 @@ const checkValidationResult = (req, res, next) => {
     }
 }
 
-module.exports = { checkValidationResult }
+module.exports = { idEsMongoId, checkValidationResult }

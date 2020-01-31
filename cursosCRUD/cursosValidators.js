@@ -7,7 +7,7 @@ const getCursosQueryValidators = [
     query('duracion').optional().isNumeric().withMessage("duracion debe ser numerico")
 ]
 
-const postCursoValidators = [
+const postCursoBodyValidators = [
     check('anioDictado').isInt().withMessage("anioDictado debe ser entero"),
     check('tema').isString().withMessage("tema debe ser string"),
     check('duracion').isNumeric().withMessage("duracion debe ser numerico"),
@@ -43,4 +43,4 @@ const cursoExiste = (req, res, next) => {
         })
 }
 
-module.exports = { getCursosQueryValidators, postCursoValidators, cursoExiste };
+module.exports = { getCursosQueryValidators, postCursoBodyValidators, cursoExiste };

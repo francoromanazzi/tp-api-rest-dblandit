@@ -5,6 +5,10 @@ const bcrypt = require('bcryptjs');
 
 const Auth = require('../models/Auth')
 
+const crearToken = user => jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    expiresIn: 86400 // 24 horas
+});
+    
 const login = (req, res) => {
     const { username, password } = req.body;
 
@@ -24,15 +28,11 @@ const login = (req, res) => {
                         message: "Password invalido"
                     });
                 } else {
-                    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-                        expiresIn: 86400 // 24 horas
-                    });
-                      
                     res.status(200).json({
                         code: 0,
                         message: {
                             auth: true,
-                            token: token
+                            token: crearToken(user)
                         }
                     });   
                 }        
@@ -55,16 +55,11 @@ const register = (req, res) => {
     
     Auth.create({ username, password: hashedPassword })
         .then(user => {
-            // Crear token
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-                expiresIn: 86400 // 24 horas
-            });
-            
             res.status(200).json({
                 code: 0,
                 message: {
                     auth: true,
-                    token: token
+                    token: crearToken(user)
                 }
             });
         })
@@ -77,4 +72,40 @@ const register = (req, res) => {
         })
 }
 
-module.exports = { login, register };
+const removeUser = (req, res) => {
+    const { id } = req.params;
+
+    Auth.findOneAndDelete({ _id: id, username: { $ne: 'admin' } }, { projection: { password: 0 } })
+        .then(user => {
+            if (!user) {
+                Auth.exists({ _id: id, username: { $eq: 'admin' } })
+                    .then(exists => {
+                        if (exists) {
+                            res.status(401).json({
+                                code: 5,
+                                message: "No se puede borrar al usuario admin"
+                            })
+                        } else {
+                            res.status(404).json({
+                                code: 12,
+                                message: "El user no fue encontrado"
+                            })
+                        }
+                    })
+            } else {
+                res.status(200).json({
+                    code: 0,
+                    message: user
+                })
+            }            
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({
+                code: 20,
+                message: "Ocurrió un error con un módulo interno"
+            });
+        })
+}
+
+module.exports = { login, register, removeUser };

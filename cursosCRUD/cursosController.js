@@ -1,7 +1,11 @@
+const _ = require('lodash/core')
+
 const Curso = require('../models/Curso');
 
 const getCursos = (req, res) => {
-    Curso.find(req.query)
+    const querySanitizada = _.pick(req.query, ['anioDictado', 'duracion'])
+
+    Curso.find(querySanitizada)
         .then(cursos => {
             res.status(200).json({
                 code: 0,
@@ -49,11 +53,18 @@ const deleteCurso = (req, res) => {
     const { id } = req.params;
 
     Curso.findByIdAndDelete(id)
-        .then(() => {
-            res.status(200).json({
-                code: 0,
-                message: "Curso eliminado correctamente"
-            })
+        .then(curso => {
+            if (!curso) {
+                res.status(404).json({
+                    code: 12,
+                    message: "El curso no fue encontrado"
+                })
+            } else {
+                res.status(200).json({
+                    code: 0,
+                    message: curso
+                })
+            }            
         })
         .catch(err => {
             console.log(err);
