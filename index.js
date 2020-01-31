@@ -18,8 +18,8 @@ const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/cursos";
 app.use(bodyParser.json());
 
 // Routes
-app.use('/cursos', adminRoute, cursosRouter);
-app.use('/auth', authRouter);
+app.use('/api/v1/cursos', adminRoute, cursosRouter);
+app.use('/api/v1/auth', authRouter);
 
 // Start server
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
