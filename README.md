@@ -3,7 +3,7 @@
 > Backend API REST para aplicación de cursos y alumnos. Capacitación DBlandIT Big Data 2020
 
 ## Documentación
-[En SwaggerHub](https://app.swaggerhub.com/apis-docs/francoromanazzi/tp-api-rest-dblandit/1.0.0), o bien importando el archivo docs/api.yaml
+[En SwaggerHub](https://app.swaggerhub.com/apis-docs/francoromanazzi/tp-api-rest-dblandit/1.0.0), o bien importando el archivo [docs/api.yaml](https://github.com/francoromanazzi/tp-api-rest-dblandit/blob/master/docs/api.yaml)
 
 ## Tecnologías utilizadas
 
