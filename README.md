@@ -54,9 +54,9 @@ Nos dijeron además que para almacenar los datos quieren que usemos MongoDB y No
 El modelado de datos queda a nuestra disposición.
 
 Puntualmente nos pidieron que la API permita:
-Crear y eliminar cursos.
-Listar los cursos (permitiendo filtrar por su duración y año de dictado) en formato JSON
-Obtener los alumnos de un curso en formato JSON.
-Saber cuál fue el alumno que se destacó en un curso (el que tenga mayor nota).
+* Crear y eliminar cursos.
+* Listar los cursos (permitiendo filtrar por su duración y año de dictado) en formato JSON
+* Obtener los alumnos de un curso en formato JSON.
+* Saber cuál fue el alumno que se destacó en un curso (el que tenga mayor nota).
 
 Nota: no se requiere implementar un mecanismo de autenticación, pero en caso que deseen hacerlo suma.
