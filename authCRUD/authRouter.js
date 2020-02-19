@@ -8,7 +8,7 @@ const { login, register, removeUser } = require('./authController')
 
 authRouter.post('/login', postLoginValidators, checkValidationResult, login);
 
-authRouter.post('/register', adminRoute, postLoginValidators, checkValidationResult, register);
+authRouter.post('/register', postLoginValidators, checkValidationResult, register);
 
 authRouter.delete('/:id', adminRoute, idEsMongoId, checkValidationResult, removeUser);
 

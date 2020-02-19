@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 export const getCursos = (anio, duracion) => dispatch => {
-    console.log({ anio, duracion })
-
     let url = '/api/v1/cursos';
     if (anio && duracion) url += `?anioDictado=${anio}&duracion=${duracion}`
     else if (anio) url += `?anioDictado=${anio}`

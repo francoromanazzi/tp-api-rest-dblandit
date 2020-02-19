@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import Navbar from './components/layout/Navbar';
 import Cursos from './components/cursos/Cursos';
 import Landing from './components/landing/Landing';
+import Login from './components/login/Login'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Container maxWidth="sm">
             <Route exact path="/" component={Landing}/>
             <Route exact path="/cursos" component={Cursos}/>
+            <Route exact path="/login" component={Login}/>
           </Container>
         </div>
       </Router>

@@ -1,5 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { compose } from 'redux'
 
 import { withStyles } from '@material-ui/core';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,10 +20,11 @@ const styles = theme => ({
   },
   title: {
     flexGrow: 1,
+    textDecoration: 'none'
   }
 });
 
-function Navbar({ classes }) {
+function Navbar({ classes, isAuthenticated }) {
   return (
     <div className={classes.root}>
       <AppBar position="fixed">
@@ -29,14 +32,21 @@ function Navbar({ classes }) {
             <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6" className={classes.title} color="inherit" component={Link} to="/cursos">
                 DBlandIT Cursos
             </Typography>
-            <Button color="inherit" component={Link} to="/login">Login</Button>
+            {!isAuthenticated && <Button color="inherit" component={Link} to="/login">Login</Button>}
         </Toolbar>
       </AppBar>
     </div>
   )
 }
 
-export default withStyles(styles)(Navbar)
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps)
+)(Navbar)
