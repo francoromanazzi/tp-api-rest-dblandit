@@ -6,6 +6,7 @@ import { withStyles } from '@material-ui/core'
 
 import { getCursos } from '../../actions/cursos'
 import CursosItem from './CursosItem'
+import CursosFilter from './CursosFilter'
 
 const styles = theme => ({
     root: {
@@ -22,6 +23,7 @@ class Cursos extends Component {
         const { classes, cursos: { cursos } } = this.props;
         return (
             <div className={classes.root}>
+                <CursosFilter />
                 {cursos && cursos.map(curso => <CursosItem key={curso._id} curso={curso} />)}
             </div>
         )

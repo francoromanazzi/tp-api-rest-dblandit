@@ -23,19 +23,19 @@ const styles = theme => ({
 
 function Navbar({ classes }) {
   return (
-      <div className={classes.root}>
-        <AppBar position="fixed">
-          <Toolbar variant="dense">
-              <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                  DBlandIT Cursos
-              </Typography>
-              <Button color="inherit" component={Link} to="/login">Login</Button>
-          </Toolbar>
-        </AppBar>
-      </div>
+    <div className={classes.root}>
+      <AppBar position="fixed">
+        <Toolbar variant="dense">
+            <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+                DBlandIT Cursos
+            </Typography>
+            <Button color="inherit" component={Link} to="/login">Login</Button>
+        </Toolbar>
+      </AppBar>
+    </div>
   )
 }
 

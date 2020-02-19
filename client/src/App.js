@@ -11,7 +11,7 @@ function App() {
       <Router>
         <div className="App">
           <Navbar />
-          <Container maxWidth="md">
+          <Container maxWidth="sm">
             <Route exact path="/" component={Landing}/>
             <Route exact path="/cursos" component={Cursos}/>
           </Container>

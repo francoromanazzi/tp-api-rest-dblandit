@@ -1,24 +1,27 @@
 import axios from 'axios';
 
-// Obtener todos los cursos
-export const getCursos = () => dispatch => {
-  //dispatch(clearErrors());
-  //dispatch(setPlaylistsLoading());
+export const getCursos = (anio, duracion) => dispatch => {
+    console.log({ anio, duracion })
 
-  axios
-    .get('/api/v1/cursos')
-    .then(res => {
-        console.log(res);
-        dispatch({
-            type: 'GET_CURSOS',
-            payload: res.data.message
+    let url = '/api/v1/cursos';
+    if (anio && duracion) url += `?anioDictado=${anio}&duracion=${duracion}`
+    else if (anio) url += `?anioDictado=${anio}`
+    else if (duracion) url += `?duracion=${duracion}`
+
+    axios
+        .get(url)
+        .then(res => {
+            console.log(res);
+            dispatch({
+                type: 'GET_CURSOS',
+                payload: res.data.message
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            dispatch({
+                type: 'GET_ERRORS',
+                payload: { error: err.response.data }
+            });
         });
-    })
-    .catch(err => {
-        console.error(err);
-        dispatch({
-            type: 'GET_ERRORS',
-            payload: { error: err.response.data }
-        });
-    });
 };
