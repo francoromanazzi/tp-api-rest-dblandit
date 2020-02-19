@@ -4,12 +4,13 @@ const { getCursos, getCurso, postCurso, deleteCurso } = require('./cursosControl
 const { getCursosQueryValidators, postCursoBodyValidators, cursoExiste } = require('./cursosValidators');
 const { checkValidationResult, idEsMongoId } = require('../utils/commonValidators')
 const { getAlumnos, getAlumnoDestacado } = require('../alumnosCRUD/alumnosController');
+const { adminRoute } = require('../authCRUD/authValidators');
 
 cursosRouter.get('/', getCursosQueryValidators, checkValidationResult, getCursos);
-cursosRouter.post('/', postCursoBodyValidators, checkValidationResult, postCurso);
+cursosRouter.post('/', adminRoute, postCursoBodyValidators, checkValidationResult, postCurso);
 
 cursosRouter.get('/:id', idEsMongoId, checkValidationResult, cursoExiste, getCurso);
-cursosRouter.delete('/:id', idEsMongoId, checkValidationResult, deleteCurso);
+cursosRouter.delete('/:id', adminRoute, idEsMongoId, checkValidationResult, deleteCurso);
 
 cursosRouter.get('/:id/alumnos', idEsMongoId, checkValidationResult, cursoExiste, getAlumnos);
 

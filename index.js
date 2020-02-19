@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 
 const cursosRouter = require('./cursosCRUD/cursosRouter');
 const authRouter = require('./authCRUD/authRouter');
-const { adminRoute } = require('./authCRUD/authValidators');
 
 const app = express();
 
@@ -18,7 +17,7 @@ const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/cursos";
 app.use(bodyParser.json());
 
 // Routes
-app.use('/api/v1/cursos', adminRoute, cursosRouter);
+app.use('/api/v1/cursos', cursosRouter);
 app.use('/api/v1/auth', authRouter);
 
 // Start server
