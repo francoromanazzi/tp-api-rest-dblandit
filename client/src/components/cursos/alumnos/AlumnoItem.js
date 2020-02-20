@@ -11,7 +11,10 @@ const styles = theme => ({
 function AlumnoItem({ alumno, classes }) {
     return (
         <ListItem className={classes.item}>
-            <ListItemText primary={`${alumno.apellido}, ${alumno.nombre}`} />
+            <ListItemText
+                primary={`${alumno.apellido}, ${alumno.nombre} (${alumno.nota})`}
+                secondary={`DNI ${alumno.dni} - ${alumno.direccion}`}
+            />
         </ListItem>
     )
 }

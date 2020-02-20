@@ -77,6 +77,7 @@ class Login extends Component {
                             <Button
                                 variant="contained"
                                 type="submit"
+                                className={classes.root}
                             >
                                 Ingresar
                             </Button>

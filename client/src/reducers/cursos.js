@@ -9,6 +9,16 @@ const cursosReducer = (state = initialState, action) => {
                 ...state,
                 cursos: action.payload
             }
+        case 'DELETE_CURSO':
+            return {
+                ...state,
+                cursos: state.cursos.filter(curso => curso._id !== action.payload)
+            }
+        case 'ADD_CURSO':
+            return {
+                ...state,
+                cursos: [action.payload, ...state.cursos]
+            }
         default:
             return state
     }

@@ -41,7 +41,7 @@ class Alumnos extends Component {
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
+                    <List component="div" disablePadding dense>
                         {alumnos && alumnos.map((alumno, i) => <AlumnoItem key={i} alumno={alumno}/>)}
                     </List>
                 </Collapse>

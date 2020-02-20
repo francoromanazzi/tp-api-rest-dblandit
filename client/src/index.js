@@ -35,7 +35,7 @@ serviceWorker.unregister();
 // Check for token
 if (localStorage.jwtToken) {
     // Set auth token header auth
-    setAuthToken(localStorage.jwtToken);
+    setAuthToken(`Bearer ${localStorage.jwtToken}`);
     // Decode token and get user info and
     const decoded = jwt_decode(localStorage.jwtToken);
     // Set user and isAuthenticated

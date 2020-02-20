@@ -23,3 +23,22 @@ export const getCursos = (anio, duracion) => dispatch => {
             });
         });
 };
+
+export const deleteCurso = cursoId => dispatch => {
+    axios
+        .delete(`/api/v1/cursos/${cursoId}`)
+        .then(res => {
+            console.log(res);
+            dispatch({
+                type: 'DELETE_CURSO',
+                payload: res.data.message._id
+            });
+        })
+        .catch(err => {
+            console.error(err);
+            dispatch({
+                type: 'GET_ERRORS',
+                payload: { error: err.response.data }
+            });
+        });
+}
