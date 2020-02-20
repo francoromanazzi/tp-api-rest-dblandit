@@ -9,12 +9,14 @@ import Alumnos from './alumnos/Alumnos'
 import { deleteCurso } from '../../actions/cursos'
 
 const styles = theme => ({
-    paper: { ...theme.customs.paper }
+    paper: { ...theme.customs.paper },
+    deleteBtn: {
+        marginRight: theme.spacing(0.5)
+    }
 });
 
 class CursosItem extends Component {
     handleDeleteClick = cursoId => {
-        console.log(cursoId)
         this.props.deleteCurso(cursoId)
     }
 
@@ -29,14 +31,14 @@ class CursosItem extends Component {
                     </Grid>
                     {isAuthenticated &&
                         <Grid item>                      
-                            <IconButton edge="end" onClick={() => this.handleDeleteClick(curso._id)}>
+                            <IconButton edge="end" onClick={() => this.handleDeleteClick(curso._id)} className={classes.deleteBtn}>
                                 <DeleteIcon />
                             </IconButton>
                         </Grid>
                     }                  
                 </Grid>
                 <Typography variant="subtitle1">{curso.duracion} horas</Typography>
-                <Alumnos alumnos={curso.alumnos}/>
+                <Alumnos alumnos={curso.alumnos} cursoId={curso._id}/>
             </Paper>
         )
     }

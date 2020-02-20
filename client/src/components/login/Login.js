@@ -45,7 +45,7 @@ class Login extends Component {
         const { username, password } = this.state;
 
         return (
-            <Paper className={classes.paper} elevation={0}>
+            <Paper className={classes.paper} elevation={3}>
                 <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                     <Grid
                         container
@@ -78,6 +78,7 @@ class Login extends Component {
                                 variant="contained"
                                 type="submit"
                                 className={classes.root}
+                                fullWidth
                             >
                                 Ingresar
                             </Button>

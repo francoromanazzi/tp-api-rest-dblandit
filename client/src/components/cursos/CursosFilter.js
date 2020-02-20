@@ -12,7 +12,8 @@ const styles = theme => ({
         paddingTop: theme.spacing(2),
         marginTop: theme.spacing(2),
         paddingBottom: theme.spacing(0),
-        marginBottom: theme.spacing(0)
+        marginBottom: theme.spacing(0),
+        backgroundColor: theme.palette.primary.paper
     }
 });
 

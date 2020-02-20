@@ -13,6 +13,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 import AlumnoItem from './AlumnoItem'
 
+
 class Alumnos extends Component {
     state = {
         open: false
@@ -25,8 +26,8 @@ class Alumnos extends Component {
     }
 
     render() {
-        const { alumnos } = this.props;
         const { open } = this.state;
+        const { alumnos } = this.props;
 
         return (
             <List
@@ -42,7 +43,11 @@ class Alumnos extends Component {
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding dense>
-                        {alumnos && alumnos.map((alumno, i) => <AlumnoItem key={i} alumno={alumno}/>)}
+                        {alumnos.length > 0 &&
+                            alumnos        
+                                .sort((alu1, alu2) => alu2.nota - alu1.nota)
+                                .map((alumno, i) => <AlumnoItem key={i} alumno={alumno}/>)
+                        }
                     </List>
                 </Collapse>
             </List>

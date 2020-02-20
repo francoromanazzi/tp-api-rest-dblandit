@@ -7,16 +7,24 @@ const theme = createMuiTheme({
 });
 
 export default createMuiTheme({
-    typography: {
-      useNextVariants: true
+  palette: {
+    primary: {
+      main: '#538e5a'
     },
-    customs: {
-      paper: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing(4),
-        marginTop: theme.spacing(4),
-        paddingBottom: theme.spacing(4),
-        marginBottom: theme.spacing(4)
-      }
+    secondary: {
+      main: '#f05c22'
     }
+  },
+  typography: {
+    useNextVariants: true
+  },
+  customs: {
+    paper: {
+      ...theme.mixins.gutters(),
+      paddingTop: theme.spacing(4),
+      marginTop: theme.spacing(4),
+      paddingBottom: theme.spacing(4),
+      marginBottom: theme.spacing(4)
+    }
+  }
 });
