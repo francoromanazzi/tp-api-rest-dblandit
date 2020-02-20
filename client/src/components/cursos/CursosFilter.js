@@ -5,6 +5,7 @@ import { compose } from 'redux'
 import { TextField, withStyles, Paper, Grid } from '@material-ui/core'
 
 import { getCursos } from '../../actions/cursos'
+import getErrorForParam from '../../utils/getErrorForParam'
 
 const styles = theme => ({
     paper: {
@@ -34,8 +35,13 @@ class CursosFilter extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { errors, classes } = this.props;
         const { anio, duracion } = this.state;
+
+        const errores = {
+            anioDictado: getErrorForParam(errors, 'anioDictado'),
+            duracion: getErrorForParam(errors, 'duracion')
+        }
 
         return (
             <Paper className={classes.paper} elevation={0}>
@@ -50,18 +56,20 @@ class CursosFilter extends Component {
                             <TextField
                                 id="anio"
                                 name="anio"
-                                label="Año"
+                                label={errores.anioDictado || "Año"}
                                 onChange={this.handleChange}
                                 value={anio}
+                                error={errores.anioDictado}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField 
                                 id="duracion"
                                 name="duracion"
-                                label="Duración"
+                                label={errores.duracion || "Duración"}
                                 onChange={this.handleChange}
                                 value={duracion}
+                                error={errores.duracion}
                             />
                         </Grid>
                     </Grid>
@@ -71,10 +79,14 @@ class CursosFilter extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    errors: state.errors.errors
+})
+
 export default compose(
     withStyles(styles),
     connect(
-        null,
+        mapStateToProps,
         { getCursos }
     )
 )(CursosFilter);

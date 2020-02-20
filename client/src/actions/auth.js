@@ -20,6 +20,9 @@ export const loginUser = userData => dispatch => {
             const decoded = jwt_decode(token);
 
             dispatch(setCurrentUser(decoded));
+            dispatch({
+                type: 'CLEAR_ERRORS'
+            });
         })
         .catch(err => {
             console.error(err);

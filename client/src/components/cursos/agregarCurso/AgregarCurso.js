@@ -8,6 +8,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import AgregarAlumnos from './AgregarAlumnos'
 import { postCurso } from '../../../actions/cursos'
+import getErrorForParam from '../../../utils/getErrorForParam'
 
 const styles = theme => ({
     paper: { ...theme.customs.paper },
@@ -76,8 +77,14 @@ class AgregarCurso extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { errors, classes } = this.props;
         const { tema, anioDictado, duracion, alumnos } = this.state;
+
+        const errores = {
+            tema: getErrorForParam(errors, 'tema'),
+            duracion: getErrorForParam(errors, 'duracion'),
+            anioDictado: getErrorForParam(errors, 'anioDictado')
+        }
 
         return (
             <Grid
@@ -98,31 +105,34 @@ class AgregarCurso extends Component {
                         </Typography>
                         <form noValidate autoComplete="off" onSubmit={this.handleSubmit}>
                             <TextField
-                                label="Tema"
+                                label={errores.tema || 'Tema'}
                                 name="tema"
                                 onChange={this.handleChange}
                                 fullWidth
                                 value={tema}
                                 required
                                 className={classes.input}
+                                error={errores.tema}
                             />
                             <TextField
-                                label="Duración (hs)"
+                                label={errores.duracion || 'Duracion (hs)'}
                                 name="duracion"
                                 onChange={this.handleChange}
                                 fullWidth
                                 value={duracion}
                                 required
                                 className={classes.input}
+                                error={errores.duracion}
                             />
                             <TextField
-                                label="Año dictado"
+                                label={errores.anioDictado || 'Año dictado'}
                                 name="anioDictado"
                                 onChange={this.handleChange}
                                 fullWidth
                                 value={anioDictado}
                                 required
                                 className={classes.input}
+                                error={errores.anioDictado}
                             />
                             <AgregarAlumnos
                                 alumnos={alumnos}
@@ -157,11 +167,15 @@ class AgregarCurso extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    errors: state.errors.errors
+})
+
 export default compose(
     withStyles(styles),
     withRouter,
     connect(
-        null,
+        mapStateToProps,
         { postCurso }
     )
 )(AgregarCurso)

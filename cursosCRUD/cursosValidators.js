@@ -8,14 +8,22 @@ const getCursosQueryValidators = [
 ]
 
 const postCursoBodyValidators = [
-    check('anioDictado').isInt().withMessage("anioDictado debe ser entero"),
-    check('tema').isString().withMessage("tema debe ser string"),
-    check('duracion').isNumeric().withMessage("duracion debe ser numerico"),
-    check('alumnos.*.nombre').isString().withMessage("alumnos.nombre debe ser string"),
-    check('alumnos.*.apellido').isString().withMessage("alumnos.apellido debe ser string"),
-    check('alumnos.*.dni').isInt().withMessage("alumnos.dni debe ser entero"),
-    check('alumnos.*.direccion').isString().withMessage("alumnos.direccion debe ser string"),
-    check('alumnos.*.nota').isNumeric().withMessage("alumnos.nota debe ser numerico")
+    check('anioDictado').not().isEmpty().withMessage("anioDictado no puede estar vacio")
+        .isInt().withMessage("anioDictado debe ser entero"),
+    check('tema').not().isEmpty().withMessage("tema no puede estar vacio")
+        .isString().withMessage("tema debe ser string"),
+    check('duracion').not().isEmpty().withMessage("duracion no puede estar vacio")
+        .isNumeric().withMessage("duracion debe ser numerico"),
+    check('alumnos.*.nombre').not().isEmpty().withMessage("alumnos.nombre no puede estar vacio")
+        .isString().withMessage("alumnos.nombre debe ser string"),
+    check('alumnos.*.apellido').not().isEmpty().withMessage("alumnos.apellido no puede estar vacio")
+        .isString().withMessage("alumnos.apellido debe ser string"),
+    check('alumnos.*.dni').not().isEmpty().withMessage("alumnos.dni no puede estar vacio")
+        .isInt().withMessage("alumnos.dni debe ser entero"),
+    check('alumnos.*.direccion').not().isEmpty().withMessage("alumnos.direccion no puede estar vacio")
+        .isString().withMessage("alumnos.direccion debe ser string"),
+    check('alumnos.*.nota').not().isEmpty().withMessage("alumnos.nota no puede estar vacio")
+        .isNumeric().withMessage("alumnos.nota debe ser numerico")
         .custom(nota => nota >= 0 && nota <= 10 ? Promise.resolve() : Promise.reject("alumnos.nota debe ser entre 0 y 10") ),
 ];
 

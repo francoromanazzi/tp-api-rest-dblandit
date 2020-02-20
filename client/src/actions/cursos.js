@@ -14,6 +14,9 @@ export const getCursos = (anio, duracion) => dispatch => {
                 type: 'GET_CURSOS',
                 payload: res.data.message
             });
+            dispatch({
+                type: 'CLEAR_ERRORS'
+            });
         })
         .catch(err => {
             console.error(err);
@@ -51,6 +54,9 @@ export const postCurso = (curso, history) => dispatch => {
             dispatch({
                 type: 'ADD_CURSO',
                 payload: res.data.message
+            });
+            dispatch({
+                type: 'CLEAR_ERRORS'
             });
             history.push('/cursos');
         })
