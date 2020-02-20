@@ -112,7 +112,7 @@ class AgregarCurso extends Component {
                                 value={tema}
                                 required
                                 className={classes.input}
-                                error={errores.tema}
+                                error={!!errores.tema}
                             />
                             <TextField
                                 label={errores.duracion || 'Duracion (hs)'}
@@ -122,7 +122,7 @@ class AgregarCurso extends Component {
                                 value={duracion}
                                 required
                                 className={classes.input}
-                                error={errores.duracion}
+                                error={!!errores.duracion}
                             />
                             <TextField
                                 label={errores.anioDictado || 'Año dictado'}
@@ -132,7 +132,7 @@ class AgregarCurso extends Component {
                                 value={anioDictado}
                                 required
                                 className={classes.input}
-                                error={errores.anioDictado}
+                                error={!!errores.anioDictado}
                             />
                             <AgregarAlumnos
                                 alumnos={alumnos}

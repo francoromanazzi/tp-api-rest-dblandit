@@ -59,7 +59,7 @@ class CursosFilter extends Component {
                                 label={errores.anioDictado || "Año"}
                                 onChange={this.handleChange}
                                 value={anio}
-                                error={errores.anioDictado}
+                                error={!!errores.anioDictado}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -69,7 +69,7 @@ class CursosFilter extends Component {
                                 label={errores.duracion || "Duración"}
                                 onChange={this.handleChange}
                                 value={duracion}
-                                error={errores.duracion}
+                                error={!!errores.duracion}
                             />
                         </Grid>
                     </Grid>

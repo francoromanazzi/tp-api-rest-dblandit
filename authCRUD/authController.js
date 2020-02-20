@@ -39,7 +39,7 @@ const login = (req, res) => {
             }
         })
         .catch(err => {
-            console.log(err);
+            console.error({err});
             res.status(500).json({
                 code: 20,
                 message: "Ocurrió un error con un módulo interno"
