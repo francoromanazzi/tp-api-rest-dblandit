@@ -6,9 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "populate": "node ./sampleDataset/populate.js",
-    "server": "nodemon index.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "server": "nodemon index.js"
   },
   "repository": {
     "type": "git",

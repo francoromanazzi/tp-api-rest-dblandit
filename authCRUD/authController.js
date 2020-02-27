@@ -5,9 +5,16 @@ const bcrypt = require('bcryptjs');
 
 const Auth = require('../models/Auth')
 
-const crearToken = user => jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: 86400 // 24 horas
-});
+const crearToken = user => jwt.sign(
+    { 
+        id: user._id,
+        username: user.username 
+    },
+    process.env.JWT_SECRET,
+    {
+        expiresIn: 86400 // 24 horas
+    }
+);
     
 const login = (req, res) => {
     const { username, password } = req.body;
